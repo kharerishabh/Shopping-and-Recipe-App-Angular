@@ -7,7 +7,8 @@ import { Ingredient } from '../shared/ingredient.model';
   styleUrl: './shopping-list.component.css'
 })
 export class ShoppingListComponent {
-  @Input() element: {type: string, name: string, content: string}
+  // custom property binding example
+  // @Input() element: {type: string, name: string, content: string}
   ingredients: Ingredient[] = [
     new Ingredient('Apples', 5),
     new Ingredient('Tomatos', 10),

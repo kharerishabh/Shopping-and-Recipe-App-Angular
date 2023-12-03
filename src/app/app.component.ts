@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-serverElements = [{type: 'server', name: 'TestServer', content: 'Just a test'}]
+//   Custom property binding example
+// serverElements = [{type: 'server', name: 'TestServer', content: 'Just a test'}]
 }

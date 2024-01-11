@@ -8,8 +8,4 @@ import { Component } from '@angular/core';
 export class AppComponent {
   //   Custom property binding example
   // serverElements = [{type: 'server', name: 'TestServer', content: 'Just a test'}]
-  loadedFeature = 'recipe'
-  onNavigate(feature: string) {
-    this.loadedFeature = feature
-  }
 }

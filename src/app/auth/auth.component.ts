@@ -11,7 +11,6 @@ export class AuthComponent {
   isLoginMode = true;
   isLoading = false;
   error = null;
-  
 
   constructor(private authService: AuthService) {}
 
@@ -20,39 +19,29 @@ export class AuthComponent {
   }
 
   onSubmit(form: NgForm) {
-    let authObser: Observable<AuthResponseData>
+    let authObser: Observable<AuthResponseData>;
     if (!form.valid) {
       return;
     }
     const email = form.value.email;
     const password = form.value.password;
 
-    this.isLoading = true
+    this.isLoading = true;
+
     if (this.isLoginMode) {
-      authObser = this.authService.login(email, password)
+      authObser = this.authService.login(email, password);
     } else {
-      authObser = this.authService.signUp(email, password)
-      //.subscribe(
-      //   respData => {
-      //     console.log(respData);
-      //     this.isLoading = false
-      //   },
-      //   errorMessage => {
-      //     console.log(errorMessage);
-      //     this.error = errorMessage
-      //     this.isLoading = false
-      //   }
-      // );
+      authObser = this.authService.signUp(email, password);
     }
     authObser.subscribe(
-      respData => {
+      (respData) => {
         console.log(respData);
-        this.isLoading = false
+        this.isLoading = false;
       },
-      errorMessage => {
+      (errorMessage) => {
         console.log(errorMessage);
-        this.error = errorMessage
-        this.isLoading = false
+        this.error = errorMessage;
+        this.isLoading = false;
       }
     );
     form.reset();

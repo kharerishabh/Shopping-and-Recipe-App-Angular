@@ -13,7 +13,7 @@ export interface AuthResponseData {
 }
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  user: Subject<User>;
+  user = new Subject<User>();
 
   constructor(private http: HttpClient) {}
 

@@ -14,6 +14,7 @@ import { RecipesModule } from './recipes/recipes.module';
 import { RecipesRoutingModule } from './recipes/recipes-routing.module';
 import { ShoppingListModule } from './shopping-list/shopping-list.module';
 import { SharedModule } from './shared/shared.module';
+import { CoreModule } from './core.module';
 
 @NgModule({
   declarations: [
@@ -30,16 +31,8 @@ import { SharedModule } from './shared/shared.module';
     RecipesModule,
     RecipesRoutingModule,
     ShoppingListModule,
-    SharedModule
-  ],
-  providers: [
-    ShoppingListService,
-    RecipeService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptorService,
-      multi: true,
-    },
+    SharedModule,
+    CoreModule
   ],
   bootstrap: [AppComponent],
 })

@@ -10,7 +10,7 @@ import { SharedModule } from '../shared/shared.module';
   declarations: [ShoppingListComponent, ShoppingEditComponent],
   imports: [
     RouterModule.forChild([{
-      path: 'shopping-list',
+      path: '',
       component: ShoppingListComponent,
   }]),
     SharedModule,

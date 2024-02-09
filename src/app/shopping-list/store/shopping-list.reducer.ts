@@ -26,7 +26,7 @@ export const ShoppingListReducer = createReducer(
     })),
 )
 
-//Alternative Way
+//Alternative Way an old way
 // const initialState = {
 //     ingredients: [new Ingredient('Apples', 5), new Ingredient('Tomatoes', 10)]
 //   };

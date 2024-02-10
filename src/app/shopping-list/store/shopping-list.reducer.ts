@@ -4,6 +4,8 @@ import {
   AddIngredient,
   AddIngredients,
   DeleteIngredient,
+  StartEdit,
+  StopEdit,
   UpdateIngredient,
 } from './shopping-list.actions';
 
@@ -53,6 +55,20 @@ export const ShoppingListReducer = createReducer(
       editedIngredient: null,
       editedIngredientIndex: -1
     };
+  }),
+  on(StartEdit, (state, action) => {
+    return {
+        ...state,
+        editedIngredientIndex: action.index,
+        editedIngredient: {...state.ingredients[action.index]}
+    }
+  }),
+  on(StopEdit, (state) => {
+    return {
+        ...state,
+        editedIngredient: null,
+        editedIngredientIndex: -1
+    }
   })
 );
 

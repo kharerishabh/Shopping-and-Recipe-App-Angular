@@ -20,6 +20,15 @@ export const DeleteIngredient = createAction(
   '[Shopping List] Delete Ingredient',
 )
 
+export const StartEdit = createAction(
+  '[Shopping List] Start Edit',
+  props<{index: number}>()
+)
+
+export const StopEdit = createAction(
+  '[Shopping List] Stop Edit'
+)
+
 
 
 

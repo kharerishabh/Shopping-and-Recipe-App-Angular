@@ -6,6 +6,11 @@ export const AddIngredient = createAction(
   props<{ ingredient: Ingredient }>()
 );
 
+export const AddIngredients = createAction(
+  '[Shopping List] Add Ingredients',
+  props<{ ingredients: Ingredient[] }>()
+);
+
 //Alternative Syntax
 // export const ADD_INGREDIENT = 'ADD_INGREDIENT';
 

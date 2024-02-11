@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 
-export const login = createAction(
+export const Login = createAction(
   '[Auth] Login',
   props<{
     email: string;
@@ -10,6 +10,6 @@ export const login = createAction(
   }>()
 );
 
-export const logout = createAction(
+export const Logout = createAction(
     '[Auth] Logout',
 )

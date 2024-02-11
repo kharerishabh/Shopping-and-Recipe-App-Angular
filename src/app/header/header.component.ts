@@ -1,38 +1,46 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
-import { DataStrorageService } from "../shared/data-storage.service";
-import { Subscription } from "rxjs";
-import { AuthService } from "../auth/auth.service";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { DataStrorageService } from '../shared/data-storage.service';
+import { Subscription, map } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { AuthService } from '../auth/auth.service';
+import { AppState } from '../store/app.reducer';
 
 @Component({
-    selector: 'app-header',
-    templateUrl: './header.component.html'
-
+  selector: 'app-header',
+  templateUrl: './header.component.html',
 })
-export class HeaderComponent implements OnInit, OnDestroy{
-    isAuthenticated = false
-    authSub: Subscription;
+export class HeaderComponent implements OnInit, OnDestroy {
+  isAuthenticated = false;
+  authSub: Subscription;
 
-    constructor(private dataStorageService: DataStrorageService, private authService: AuthService){}
+  constructor(
+    private dataStorageService: DataStrorageService,
+    private authService: AuthService,
+    private store: Store<AppState>
+  ) {}
 
-    ngOnInit(): void {
-        this.authSub = this.authService.user.subscribe(user => {
-            this.isAuthenticated = !!user
-        })
-    }
+  ngOnInit(): void {
+    this.authSub = this.store
+      .select('auth')
+      .pipe(map((authState) => authState.user))
+      .subscribe((user) => {
+        this.isAuthenticated = !!user;
+      });
+  }
 
-    onSaveData(){
-        this.dataStorageService.storeRecipes()
-    }
+  onSaveData() {
+    this.dataStorageService.storeRecipes();
+  }
 
-    onFetchData() {
-        this.dataStorageService.fetchRecipes().subscribe()
-    }
+  onFetchData() {
+    this.dataStorageService.fetchRecipes().subscribe();
+  }
 
-    onLogout(){
-        this.authService.logout()
-    }
+  onLogout() {
+    this.authService.logout();
+  }
 
-    ngOnDestroy(): void {
-        this.authSub.unsubscribe()
-    }
+  ngOnDestroy(): void {
+    this.authSub.unsubscribe();
+  }
 }

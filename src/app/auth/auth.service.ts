@@ -6,7 +6,7 @@ import { User } from './user.model';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { AppState } from '../store/app.reducer';
-import { login, logout } from './store/auth.actions';
+import { Login, Logout } from './store/auth.actions';
 
 export interface AuthResponseData {
   idToken: string;
@@ -18,7 +18,7 @@ export interface AuthResponseData {
 }
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  user = new BehaviorSubject<User>(null);
+  // user = new BehaviorSubject<User>(null);
   private tokenExpirationTimer: any;
 
   constructor(
@@ -96,7 +96,7 @@ export class AuthService {
     if (loadedUser.token) {
       // this.user.next(loadedUser);
       this.store.dispatch(
-        login({
+        Login({
           email: loadedUser.email,
           userId: loadedUser.id,
           token: loadedUser.token,
@@ -112,7 +112,7 @@ export class AuthService {
 
   logout() {
     // this.user.next(null);
-    this.store.dispatch(logout());
+    this.store.dispatch(Logout());
     this.router.navigate(['/auth']);
     localStorage.removeItem('userData');
     if (this.tokenExpirationTimer) {
@@ -137,7 +137,7 @@ export class AuthService {
     const user = new User(email, userId, token, expirationDate);
     // this.user.next(user);
     this.store.dispatch(
-      login({
+      Login({
         email: email,
         userId: userId,
         token: token,

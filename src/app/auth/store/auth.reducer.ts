@@ -1,33 +1,78 @@
-import { createReducer, on } from '@ngrx/store';
+//import { createReducer, on } from '@ngrx/store';
 import { User } from '../user.model';
-import { Login, Logout } from './auth.actions';
+import * as AuthActions from '../store/auth.actions';
 
 export interface AuthState {
   user: User;
+  authError: string;
+  loading: boolean;
 }
 
 const initialState: AuthState = {
   user: null,
+  authError: null,
+  loading: false,
 };
 
-export const AuthReducer = createReducer(
-  initialState,
-  on(Login, (state, action) => {
-    const user = new User(
-      action.email,
-      action.userId,
-      action.token,
-      action.expirationDate
-    );
-    return {
-      ...state,
-      user: user,
-    };
-  }),
-  on(Logout, (state) => {
-    return {
-      ...state,
-      user: null,
-    };
-  })
-);
+export function authReducer(
+  state = initialState,
+  action: AuthActions.AuthActions
+) {
+  switch (action.type) {
+    case AuthActions.LOGIN:
+      const user = new User(
+        action.payload.email,
+        action.payload.userId,
+        action.payload.token,
+        action.payload.expirationDate
+      );
+      return {
+        ...state,
+        user: user,
+        authError: null,
+        loading: false,
+      };
+    case AuthActions.LOGOUT:
+      return {
+        ...state,
+        user: null,
+      };
+    case AuthActions.LOGIN_START:
+      return {
+        ...state,
+        authError: null,
+        loading: true,
+      };
+    case AuthActions.LOGIN_FAIL:
+      return {
+        ...state,
+        user: null,
+        authError: action.payload,
+        loading: false,
+      };
+    default:
+      return state;
+  }
+}
+
+// export const AuthReducer = createReducer(
+//   initialState,
+//   on(Login, (state, action) => {
+//     const user = new User(
+//       action.email,
+//       action.userId,
+//       action.token,
+//       action.expirationDate
+//     );
+//     return {
+//       ...state,
+//       user: user,
+//     };
+//   }),
+//   on(Logout, (state) => {
+//     return {
+//       ...state,
+//       user: null,
+//     };
+//   }),
+// );

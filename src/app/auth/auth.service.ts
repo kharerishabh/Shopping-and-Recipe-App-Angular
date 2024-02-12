@@ -6,7 +6,7 @@ import { User } from './user.model';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { AppState } from '../store/app.reducer';
-import { Login, Logout } from './store/auth.actions';
+import * as AuthActions from './store/auth.actions'
 
 export interface AuthResponseData {
   idToken: string;
@@ -95,7 +95,7 @@ export class AuthService {
 
     if (loadedUser.token) {
       // this.user.next(loadedUser);
-      this.store.dispatch(
+      this.store.dispatch(new AuthActions.
         Login({
           email: loadedUser.email,
           userId: loadedUser.id,
@@ -112,7 +112,7 @@ export class AuthService {
 
   logout() {
     // this.user.next(null);
-    this.store.dispatch(Logout());
+    this.store.dispatch(new AuthActions.Logout());
     this.router.navigate(['/auth']);
     localStorage.removeItem('userData');
     if (this.tokenExpirationTimer) {
@@ -136,7 +136,7 @@ export class AuthService {
     const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
     const user = new User(email, userId, token, expirationDate);
     // this.user.next(user);
-    this.store.dispatch(
+    this.store.dispatch(new AuthActions.
       Login({
         email: email,
         userId: userId,

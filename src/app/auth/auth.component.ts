@@ -1,8 +1,8 @@
 import { Component, ComponentFactoryResolver, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthResponseData, AuthService } from './auth.service';
-import { Observable, Subscription } from 'rxjs';
+import { AuthService } from './auth.service';
+import { Subscription } from 'rxjs';
 import { AlertComponent } from '../shared/alert/alert.component';
 import { PlaceholderDirective } from '../shared/placeholder/placeholder.directive';
 import { Store } from '@ngrx/store';
@@ -42,7 +42,6 @@ export class AuthComponent implements OnInit, OnDestroy{
   }
 
   onSubmit(form: NgForm) {
-    let authObser: Observable<AuthResponseData>;
     if (!form.valid) {
       return;
     }
@@ -55,7 +54,7 @@ export class AuthComponent implements OnInit, OnDestroy{
       // authObser = this.authService.login(email, password);
       this.store.dispatch(new AuthActions.LoginStart({email: email, password: password}))
     } else {
-      authObser = this.authService.signUp(email, password);
+      this.store.dispatch(new AuthActions.SignupStart({email: email, password: password}))
     }
 
     // authObser.subscribe(

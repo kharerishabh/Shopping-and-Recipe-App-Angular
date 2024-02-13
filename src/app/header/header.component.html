@@ -1,7 +1,7 @@
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-default" >
   <div class="container-fluid">
     <div class="navbar-header">
-      <a href="#" class="navbar-brand">Recipe Book</a>
+      <a href="#" class="navbar-brand" style="color: blueviolet;">Recipe Book</a>
     </div>
     <div class="navbar-default">
       <ul class="nav navbar-nav">
@@ -9,21 +9,21 @@
           <a routerLink="/recipes">Recipes</a>
         </li>
         <li routerLinkActive="active" *ngIf="!isAuthenticated">
-          <a routerLink="/auth">Authenticated</a>
+          <a routerLink="/auth" style="color: darkcyan;">Authenticated</a>
         </li>
         <li routerLinkActive="active">
-          <a routerLink="/shopping-list">Shopping List</a>
+          <a routerLink="/shopping-list" style="color:royalblue ;">Shopping List</a>
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li (click)="onLogout()"><a style="cursor: pointer" *ngIf="isAuthenticated">Logout</a></li>
         <li class="dropdown" appDropDown>
-          <a style="cursor: pointer" class="dropdown-toggle" role="button"
+          <a style="cursor: pointer; color: purple;" class="dropdown-toggle" role="button"
             >Manage <span class="caret"></span
           ></a>
           <ul class="dropdown-menu">
             <li>
-              <a style="cursor: pointer" (click)="onSaveData()">Save Data</a>
+              <a style="cursor: pointer; color:cornflowerblue ;" (click)="onSaveData()">Save Data</a>
             </li>
             <li>
               <a style="cursor: pointer" (click)="onFetchData()">Fetch Data</a>

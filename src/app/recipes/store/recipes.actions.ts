@@ -9,3 +9,18 @@ export const SetRecipes = createAction(
 export const FetchRecipes = createAction(
   '[Recipes] Fetch Recipes',
 )
+
+export const AddRecipe = createAction(
+  '[Recipes] Add Recipes',
+  props<{recipe: Recipe}>()
+)
+
+export const UpdateRecipe = createAction(
+  '[Recipes] Update Recipes',
+  props<{index: number, newRecipe: Recipe}>()
+)
+
+export const DeleteRecipes = createAction(
+  '[Recipes] Delete Recipes',
+  props<{index: number}>()
+)

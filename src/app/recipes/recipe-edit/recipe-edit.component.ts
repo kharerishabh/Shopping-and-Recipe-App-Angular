@@ -1,20 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { RecipeService } from '../recipe.service';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app.reducer';
-import { map } from 'rxjs';
+import { Subscription, map } from 'rxjs';
+import { AddRecipe, UpdateRecipe } from '../store/recipes.actions';
 
 @Component({
   selector: 'app-recipe-edit',
   templateUrl: './recipe-edit.component.html',
   styleUrl: './recipe-edit.component.css',
 })
-export class RecipeEditComponent implements OnInit {
+export class RecipeEditComponent implements OnInit, OnDestroy {
   id: number;
   editMode: boolean;
   recipeForm: FormGroup;
+  private storeSub: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -39,9 +41,13 @@ export class RecipeEditComponent implements OnInit {
     //   this.recipeForm.value['ingredients']
     // );
     if (this.editMode) {
-      this.recipeService.updateRecipe(this.id, this.recipeForm.value);
+      // this.recipeService.updateRecipe(this.id, this.recipeForm.value);
+      this.store.dispatch(
+        UpdateRecipe({ index: this.id, newRecipe: this.recipeForm.value })
+      );
     } else {
-      this.recipeService.addRecipe(this.recipeForm.value);
+      // this.recipeService.addRecipe(this.recipeForm.value);
+      this.store.dispatch(AddRecipe({ recipe: this.recipeForm.value }));
     }
     this.onCancel();
   }
@@ -64,7 +70,7 @@ export class RecipeEditComponent implements OnInit {
 
     if (this.editMode) {
       //const recipe = this.recipeService.getRecipes(this.id);
-      this.store
+      this.storeSub = this.store
         .select('recipes')
         .pipe(
           map((recipesState) => {
@@ -110,8 +116,13 @@ export class RecipeEditComponent implements OnInit {
   }
   onDeleteIngredients(index: number) {
     (<FormArray>this.recipeForm.get('ingredients')).removeAt(index);
-
     //Using clear method to clear all the ingredients at once
     //(<FormArray>this.recipeForm.get('ingredients')).clear()
+  }
+
+  ngOnDestroy(): void {
+    if (this.storeSub) {
+      this.storeSub.unsubscribe();
+    }
   }
 }

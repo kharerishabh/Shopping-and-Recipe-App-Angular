@@ -25,7 +25,7 @@ const handleAuthentication = (
   token: string,
   expiresIn: number
 ) => {
-  const expirationDate = new Date(new Date().getTime() + +expiresIn * 1000);
+  const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
 
   const user = new User(email, userId, token, expirationDate);
   localStorage.setItem('userData', JSON.stringify(user));
@@ -59,14 +59,14 @@ export class AuthEffects {
   authSignup = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.SIGNUP_START),
-      switchMap((singupData: AuthActions.SignupStart) => {
+      switchMap((singupAction: AuthActions.SignupStart) => {
         return this.http
           .post<AuthResponseData>(
             'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' +
               environment.firebaseAPI,
             {
-              email: singupData.payload.email,
-              password: singupData.payload.password,
+              email: singupAction.payload.email,
+              password: singupAction.payload.password,
               returnSecureToken: true,
             }
           )
@@ -106,7 +106,7 @@ export class AuthEffects {
           )
           .pipe(
             tap((resData) => {
-              this.authService.setLogoutTimer(+resData.expiresIn);
+              this.authService.setLogoutTimer(+resData.expiresIn * 1000);
             }),
             map((resData) => {
               return handleAuthentication(
